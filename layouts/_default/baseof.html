@@ -89,10 +89,10 @@
   {{- end }}
   {{- $oneko := resources.Get "js/oneko.js" }}
   {{- if eq hugo.Environment "development" }}
-    <script src="{{ $oneko.RelPermalink }}" data-cat="/img/oneko.gif"></script>
+    <script src="{{ $oneko.RelPermalink }}" data-cat="/img/django.gif"></script>
   {{- else }}
     {{- with $oneko | minify | fingerprint }}
-      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" data-cat="/img/oneko.gif"></script>
+      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" data-cat="/img/django.gif"></script>
     {{- end }}
   {{- end }}
 </body>
