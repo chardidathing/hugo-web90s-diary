@@ -1,4 +1,15 @@
 /* ============================================
+   Fonts
+   ============================================ */
+@font-face {
+  font-family: "ModernDOS";
+  src: url("/fonts/ModernDOS9x16.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
    Theme Palettes
    ============================================ */
 
@@ -141,7 +152,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font-family);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.6;
   color: var(--fg);
   background: var(--bg-page);
@@ -372,6 +383,161 @@ main {
   font-size: 0.95em;
 }
 
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1em;
+}
+
+@media (max-width: 640px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Project Card === */
+.project-card {
+  border: 2px solid var(--border-light);
+  background: var(--card-bg);
+  padding: 1em;
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+
+.project-card-title {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.project-card-meta {
+  font-size: 0.85em;
+  color: var(--fg-muted);
+  margin-top: 0.3em;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  flex-wrap: wrap;
+}
+
+.project-card-tech {
+  color: var(--category-fg);
+  font-style: italic;
+}
+
+.project-card-desc {
+  margin: 0.5em 0 0;
+  color: var(--fg);
+  font-size: 0.95em;
+}
+
+.project-card-links {
+  margin-top: 0.5em;
+  display: flex;
+  gap: 0.8em;
+  font-size: 0.9em;
+}
+
+.project-status {
+  font-size: 0.85em;
+  color: var(--fg-muted);
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+/* 98.css progress indicator */
+.progress-indicator {
+  display: block;
+  height: 22px;
+  width: 100%;
+  max-width: 242px;
+  margin-top: 0.6em;
+  padding: 3px;
+  background: #fff;
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px grey,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px #0a0a0a;
+}
+
+.progress-indicator > .progress-indicator-bar {
+  display: block;
+  height: 100%;
+  background-color: var(--progress-bar, var(--accent));
+  transition: width 300ms;
+}
+
+.progress-indicator.segmented > .progress-indicator-bar {
+  background-color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    var(--progress-bar, var(--accent)) 0,
+    var(--progress-bar, var(--accent)) 12px,
+    transparent 0,
+    transparent 14px
+  );
+  background-repeat: repeat;
+  background-size: 14px 100%;
+}
+
+/* Dark themes: sunken bezel with dark interior */
+[data-theme="98-dark"] .progress-indicator,
+[data-theme="98-charliezone"] .progress-indicator,
+[data-theme="sakura-dark"] .progress-indicator {
+  background: var(--code-block-bg);
+  box-shadow:
+    inset -1px -1px #555,
+    inset 1px 1px #000,
+    inset -2px -2px #444,
+    inset 2px 2px #000;
+}
+
+/* Light themes: subtle warm bezel interior for sakura-light */
+[data-theme="sakura-light"] .progress-indicator {
+  background: var(--bg);
+}
+
+/* Charliezone uses a slightly more saturated lavender than the soft accent */
+[data-theme="98-charliezone"] {
+  --progress-bar: #b48cc8;
+}
+
+[data-theme^="98-"] .project-card {
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px grey;
+  border: none;
+}
+[data-theme="98-dark"] .project-card,
+[data-theme="98-charliezone"] .project-card {
+  box-shadow:
+    inset -1px -1px #555,
+    inset 1px 1px #000,
+    inset -2px -2px #444,
+    inset 2px 2px #222;
+}
+
+/* 98.css .field-border-disabled — used directly in content for sunken "note" blocks.
+   Default 98.css: silver bg with light/grey inset bezel — fine for 98-light.
+   Override for the other themes so it blends in. */
+[data-theme="sakura-light"] .field-border-disabled {
+  background: var(--code-bg);
+  color: var(--fg);
+  box-shadow:
+    inset -1px -1px var(--card-bg),
+    inset 1px 1px var(--border-light);
+}
+[data-theme="sakura-dark"] .field-border-disabled,
+[data-theme="98-dark"] .field-border-disabled,
+[data-theme="98-charliezone"] .field-border-disabled {
+  background: var(--code-block-bg);
+  color: var(--code-block-fg);
+  box-shadow:
+    inset -1px -1px #555,
+    inset 1px 1px #000;
+}
+
 /* === Single Post === */
 .post-header {
   margin-bottom: 1.5em;
@@ -514,14 +680,26 @@ pre {
   line-height: 1.5;
   margin: 1em 0;
   -webkit-overflow-scrolling: touch;
+  font-family: "ModernDOS", "Cascadia Code", "Consolas", monospace;
 }
 
-pre code {
+pre code,
+pre code * {
   background: none;
   border: none;
   padding: 0;
   color: inherit;
-  font-size: 0.85em;
+  font-family: "ModernDOS", "Cascadia Code", "Consolas", monospace;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.highlight pre,
+.highlight pre code,
+.highlight pre code * {
+  font-family: "ModernDOS", "Cascadia Code", "Consolas", monospace;
+  font-size: 16px;
+  line-height: 16px;
 }
 
 /* === Hugo Chroma Syntax Highlighting === */
@@ -621,6 +799,13 @@ iframe {
 .section-heading {
   margin: 0 0 0.8em;
   color: var(--accent);
+}
+
+/* Subsequent section headings get a separator above, matching the intro divider */
+.section-heading ~ .section-heading {
+  margin-top: 1.5em;
+  padding-top: 1em;
+  border-top: 1px solid var(--border-light);
 }
 
 .see-all {

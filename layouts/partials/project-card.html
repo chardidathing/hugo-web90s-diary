@@ -1,0 +1,30 @@
+<article class="project-card">
+  <a href="{{ .RelPermalink }}">
+    <h2 class="project-card-title">{{ .Title }}</h2>
+  </a>
+  <div class="project-card-meta">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+    {{ with .Params.status }}
+      <span class="project-status">{{ . }}</span>
+    {{ end }}
+    {{ with .Params.tech }}
+      {{ range . }}<span class="project-card-tech">{{ . }}</span>{{ end }}
+    {{ end }}
+  </div>
+  {{ with .Params.progress }}
+    <div class="progress-indicator segmented" title="{{ . }}%" role="progressbar" aria-valuenow="{{ . }}" aria-valuemin="0" aria-valuemax="100">
+      <span class="progress-indicator-bar" style="width: {{ . }}%;"></span>
+    </div>
+  {{ end }}
+  {{ with .Description }}
+    <p class="project-card-desc">{{ . }}</p>
+  {{ else }}
+    <p class="project-card-desc">{{ .Summary | plainify | htmlUnescape | truncate 150 }}</p>
+  {{ end }}
+  {{ if or .Params.repo .Params.live }}
+    <div class="project-card-links">
+      {{ with .Params.repo }}<a href="{{ . }}" target="_blank" rel="noopener">repo &raquo;</a>{{ end }}
+      {{ with .Params.live }}<a href="{{ . }}" target="_blank" rel="noopener">live &raquo;</a>{{ end }}
+    </div>
+  {{ end }}
+</article>

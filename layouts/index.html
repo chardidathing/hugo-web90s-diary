@@ -12,6 +12,20 @@
     {{ end }}
   </div>
   {{ end }}
+  {{ $projects := where .Site.RegularPages "Section" "projects" }}
+  {{ if $projects }}
+    <h2 class="section-heading">Latest projects</h2>
+    <div class="project-grid">
+      {{ range first 4 $projects.ByDate.Reverse }}
+        {{ partial "project-card.html" . }}
+      {{ end }}
+    </div>
+    {{ if gt (len $projects) 4 }}
+      <div class="see-all">
+        <a href="/projects/">See all projects &raquo;</a>
+      </div>
+    {{ end }}
+  {{ end }}
   <h2 class="section-heading">Latest posts</h2>
   <div class="post-list">
     {{ $posts := where .Site.RegularPages "Section" "posts" }}

@@ -1,0 +1,20 @@
+{{ define "main" }}
+  {{ with .Content }}<div class="list-content">{{ . }}</div>{{ end }}
+  <div class="post-list">
+    {{ range .Paginator.Pages }}
+      {{ partial "project-card.html" . }}
+    {{ end }}
+  </div>
+  {{ $pag := .Paginator }}
+  {{ if gt $pag.TotalPages 1 }}
+    <nav class="pagination">
+      {{ if $pag.HasPrev }}
+        <a href="{{ $pag.Prev.URL }}">&laquo; Newer</a>
+      {{ end }}
+      <span class="pagination-info">Page {{ $pag.PageNumber }} of {{ $pag.TotalPages }}</span>
+      {{ if $pag.HasNext }}
+        <a href="{{ $pag.Next.URL }}">Older &raquo;</a>
+      {{ end }}
+    </nav>
+  {{ end }}
+{{ end }}
